@@ -1,21 +1,37 @@
 import React from 'react';
 import { createBrowserRouter } from "react-router";
 import Root from '../layout/Root/Root';
-import Home from '../layout/Home/Home';
 import ErrorPage from '../components/ErrorPage/ErrorPage';
+import About from '../components/About/About';
+import Career from '../components/Career/Career';
+import Home from '../layout/Home/Home';
+import CategoryNews from '../layout/CategoryNews';
 
 
 export const router = createBrowserRouter([
   {
     path: "/",
+    loader: ()=> fetch('/categories.json'),
     Component: Root,
     errorElement: <ErrorPage></ErrorPage>,
     children: [
         {
             index: true,
             path: '/',
-            Component: Home,
+            Component: Home
         },
+        {
+          path: '/category:id',
+          Component: CategoryNews,
+        },
+        {
+          path: '/about',
+          Component: About
+        },
+        {
+          path: '/career',
+          Component: Career
+        }
       
     ]
   },

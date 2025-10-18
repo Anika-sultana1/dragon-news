@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Navbar = () => {
+const Career = () => {
     return (
         <div>
-            <h2>ami navbar</h2>
+            <h2>ami career</h2>
         </div>
     );
 };
 
-export default Navbar;
+export default Career;
