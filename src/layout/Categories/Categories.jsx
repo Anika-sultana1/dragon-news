@@ -7,8 +7,6 @@ import { NavLink } from 'react-router';
 
 const Categories = ({data}) => {
 
-    console.log(data)
-
 
     return (
         <div>

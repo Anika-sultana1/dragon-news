@@ -1,9 +1,10 @@
 import React from "react";
 import { CiBookmark, CiShare2 } from "react-icons/ci";
 import star from "../../assets/star.png";
+import { Link } from "react-router";
 
 const NewsCard = ({ news }) => {
-  const { title, author, image_url, rating, total_view, details } = news;
+  const { id,title, author, image_url, rating, total_view, details } = news;
 
   return (
     <div className="rounded-lg shadow-lg overflow-hidden max-w-md mx-auto my-4 p-5">
@@ -41,7 +42,7 @@ const NewsCard = ({ news }) => {
           {details.length > 120 ? (
     <>
       {details.slice(0, 120)}
-      <span className="text-orange-500 ml-1 cursor-pointer">See More</span>
+      <Link to={`/newsdetails/${id}`} className="text-orange-500 ml-1 cursor-pointer">See More</Link>
     </>
   )
           : details}
