@@ -9,7 +9,6 @@ const NewsDetails = () => {
  const {id} = useParams();
   
    const [news, setNews] = useState({})
- console.log(data, id)
 
  useEffect( ()=>{
 

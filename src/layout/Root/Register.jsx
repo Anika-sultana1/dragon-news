@@ -1,13 +1,15 @@
 import React, { use, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../Provider/AuthContext';
 
 const Register = () => {
 
-const {createUser, setUser} = use(AuthContext)
+const {createUser, setUser, updateUserProfile} = use(AuthContext)
 const [succes, setSucces] = useState('')
 const [error, setError] = useState('')
  const [nameError, setNameError] = useState('')
+const navigate = useNavigate();
+
 
   const handleRegister = (event)=>{
    
@@ -15,7 +17,7 @@ const [error, setError] = useState('')
    
     event.preventDefault()
     const name = event.target.name.value;
-    if(name.lengt < 5){
+    if(name.length < 5){
       setError("Name should be more then 5 character")
       return;
     }
@@ -32,8 +34,18 @@ const [error, setError] = useState('')
    createUser( email, password)
    .then(result =>{
     console.log(result.user)
+  updateUserProfile({displayName: name, photoURL: photoUrl})
+  .then(()=>{
+        setUser({...result.user, displayName: name, photoURL: photoUrl} )
+        
+    setSucces('succesfully registered', succes)
+    navigate('/')
+  })
+  .catch(error => {
+    console.log(error)
     setUser(result.user)
-    setSucces('succesfully registered')
+  })
+
   
    })
    .catch(error => {
@@ -54,7 +66,7 @@ const [error, setError] = useState('')
               <fieldset className="fieldset">
                 {/* Name  */}
                 <label className=" text-xl font-bold py-2">Name</label>
-                <input type="text" name='name' required className="input w-full bg-base-200 py-3" placeholder="Your Name" />
+                <input type="text" name='name' className="input w-full bg-base-200 py-3" placeholder="Your Name" />
                 {
                   nameError && <p className='text-red-600'>{nameError}</p>
                 }
@@ -84,7 +96,7 @@ const [error, setError] = useState('')
                
               </fieldset>
                   {succes && <p className="text-green-600 font-semibold mt-2">{succes}</p>}
-              {error && <p className="text-red-600 font-semibold mt-2">{error}</p>}
+              {error && <p className="text-red-600 font-semibold mt-2">{error.message || error}</p>}
             </form>
           </div>
         </div>

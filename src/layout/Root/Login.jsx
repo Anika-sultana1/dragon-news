@@ -4,7 +4,9 @@ import { AuthContext } from "../../Provider/AuthContext";
 
 const Login = () => {
   const [error, setError] = useState("");
-  const { signInUser } = use(AuthContext);
+  const [email, setEmail] = useState('')
+  
+  const { signInUser,resetPassword } = use(AuthContext);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -14,7 +16,6 @@ const Login = () => {
 
     const email = event.target.email.value;
     const password = event.target.password.value;
-    console.log(email, password);
     signInUser(email, password)
       .then((result) => {
         console.log(result.user);
@@ -28,6 +29,25 @@ const Login = () => {
       });
   };
 
+  const handleForgotPassword = ()=> {
+    if(!email){
+      alert('Please enter your email first')
+      return
+    }
+
+  resetPassword(email)
+  .then( ()=>{
+    alert('Password reset email sent! Please check your inbox')
+  })
+  .catch(error => {
+    console.log(error)
+    setError(error.message)
+  })
+
+  }
+
+
+
   return (
     <div className=" bg-base-200 w-[400px] ml-100 ">
       <div className="bg-base-100 shadow-2xl">
@@ -40,6 +60,7 @@ const Login = () => {
               <input
                 name="email"
                 type="email"
+                onChange={(e) => setEmail(e.target.value)}
                 className="input w-full"
                 placeholder="Email"
                 required
@@ -54,7 +75,7 @@ const Login = () => {
                 required
               />
               <div>
-                <a className="link link-hover">Forgot password?</a>
+                <a className="link link-hover" onClick={handleForgotPassword}>Forgot password?</a>
              {
               error &&  <p className="text-red-500">{error}</p>
              }

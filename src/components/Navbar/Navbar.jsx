@@ -8,10 +8,10 @@ const Navbar = () => {
     const {user, logOutUser} = use(AuthContext)
 
     const handleLogOut= ()=>{
-        console.log('user trying to logout')
+       
         logOutUser()
         .then(result => {
-            console.log(result)
+            console.log(result.user)
             
         })
         .catch(error => {
@@ -28,7 +28,7 @@ const Navbar = () => {
            <NavLink to="/career"> <p>Career</p></NavLink>
            </div>
            <div className='flex justify-end gap-2'>
-            <img className='w-[40px] h-[40px]' src={userIcon} alt="" />
+            <img className='w-[40px] h-[40px] rounded-full' src={`${user ? user.photoURL  : userIcon }`} alt="" />
             {
                 user ? (  <Link> <button 
                     onClick={handleLogOut}

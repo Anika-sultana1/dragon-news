@@ -1,10 +1,11 @@
 import React from "react";
-import { Outlet, useLoaderData } from "react-router";
+import { Outlet, useLoaderData, useNavigation } from "react-router";
 import LatestNews from "../../components/latestNews.jsx/LatestNews";
 import Header from "../../components/Header/Header";
 import Navbar from "../../components/Navbar/Navbar";
 import LeftAside from "../Home/LeftAside";
 import RightAside from "../Home/RightAside";
+import Loading from "../../Provider/loading";
 
 
 
@@ -12,10 +13,13 @@ import RightAside from "../Home/RightAside";
 const Root = () => {
 
   const data = useLoaderData();
+  const {state} =useNavigation();
 
   return (
     <div>
-     <header><Header></Header></header>
+     <header><Header></Header>
+     {import.meta.env.VITE_name}
+     </header>
     <section className="w-11/12 mx-auto mb-3">
         <LatestNews></LatestNews>
     </section>
@@ -28,7 +32,11 @@ const Root = () => {
         </aside>
         
         <section className="main col-span-6">
-          <Outlet></Outlet>
+          {
+            state === 'loading' ? <Loading></Loading> :  <Outlet></Outlet>
+          }
+          
+         
         </section>
         <aside className="col-span-3 sticky top-0 h-fit">
           <RightAside></RightAside>
